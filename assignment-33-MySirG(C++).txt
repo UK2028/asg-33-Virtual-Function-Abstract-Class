@@ -1,0 +1,1026 @@
+NAME-UDIT KHANDELWAL 								ASSIGNMENT-33 (Virtual Function, Abstract Class)
+
+
+
+
+
+1. Create a base class called shape. Use this class to store two double type values that
+could be used to compute the area of figures. Derive two specific classes called
+triangle and rectangle from the base shape. Add to the base class, a member
+function set_data() to initialise base class data members and another member
+function display_area() to compute and display the area of figures. Make
+display_area() as a virtual function and redefine this function in the derived classes to
+suit their requirements.
+Using these three classes, design a program that will accept dimensions of a
+triangle or a rectangle interactively, and display the area.
+Remember the two values given as input will be treated as lengths of two sides in
+the case of rectangles, and as base and height in the case of the triangles, and used
+as follows:
+Area of rectangle = x * y Area of triangle = 1/2 * x * y
+
+
+#include<iostream>
+
+using namespace std;
+
+class Shape
+{
+    double d1,d2;
+
+public:
+
+    void setData(double a,double b)
+    {
+        d1=a;
+        d2=b;
+    }
+
+    double getD1()
+    {
+        return d1;
+    }
+
+    double getD2()
+    {
+        return d2;
+    }
+
+    virtual void area()=0;
+
+};
+
+class Rectangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<getD1()*getD2()<<endl;
+    }
+};
+
+class Triangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<0.5*getD1()*getD2()<<endl;
+    }
+
+};
+
+int main()
+{
+    Rectangle r;
+    r.setData(10,20);
+    r.area();
+
+    Triangle t;
+    t.setData(10,20);
+    t.area();
+
+    Shape *s;		// OBJECT OF ABSTRACT CLASS (WHO HAS A PURE VIRTUAL FUNCTION AS A MEMBER) CANNOT BE MADE BUT REFERNCE OR POINTER VARIABLE CAN BE MADE
+    Rectangle r1;		// POINTER IS ASSIGNED OBJECT OF DERIVED CLASS AND FUNCTION BINDS TO OBJECT TYPE (RUN-TIME POLYMORPHISM)
+    s=&r1;
+    s->setData(10,20);
+    s->area();
+
+    Triangle t1;
+    s=&t1;
+    s->setData(10,20);
+    s->area();
+
+    return 0;
+}
+
+
+
+2. Extend the above program to display the area of circles. This requires the addition of
+a new derived class 'circle' that computes the area of a circle. Remember, for a circle
+we need only one value, its radius, but the get_data() function in the base class
+requires two values to be passed. (Hint: Make the second argument of get_data()
+function as a default one with zero value.)
+
+
+#include<iostream>
+
+using namespace std;
+
+class Shape
+{
+    double d1,d2;
+
+public:
+
+    void setData(double a,double b=0)
+    {
+        d1=a;
+        d2=b;
+    }
+
+    double getD1()
+    {
+        return d1;
+    }
+
+    double getD2()
+    {
+        return d2;
+    }
+
+    virtual void area()=0;
+
+};
+
+class Rectangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<getD1()*getD2()<<endl;
+    }
+};
+
+class Triangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<0.5*getD1()*getD2()<<endl;
+    }
+
+};
+
+class Circle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<3.14*getD1()*getD1()<<endl;
+    }
+
+};
+
+int main()
+{
+    Rectangle r;
+    r.setData(10,20);
+    r.area();
+
+    Triangle t;
+    t.setData(10,20);
+    t.area();
+
+    Circle c;
+    c.setData(10);
+    c.area();
+
+    Shape *s;
+    Rectangle r1;
+    s=&r1;
+    s->setData(10,20);
+    s->area();
+
+    Triangle t1;
+    s=&t1;
+    s->setData(10,20);
+    s->area();
+
+    Circle c1;
+    s=&c1;
+    s->setData(10);
+    s->area();
+
+    return 0;
+}
+
+
+
+3. Using the concept of pointers, write a function that swaps the private data values of
+two objects of the same class type.
+
+
+#include<iostream>
+
+using namespace std;
+
+class Base;
+void swap(Base *p,Base *q);
+
+class Base
+{
+    int a;
+
+public:
+
+    Base()
+    {
+        a=0;
+    }
+
+    Base(int n)
+    {
+        a=n;
+    }
+
+    void setData(int n)
+    {
+        a=n;
+    }
+
+    int getData()
+    {
+        return a;
+    }
+
+    void swapValues(Base *b)
+    {
+        int t=a;
+        a=b->a;
+        b->a=t;
+    }
+
+    void display()
+    {
+        cout<<"Value= "<<a<<endl;
+    }
+};
+
+void swap(Base *p,Base *q)
+{
+    int t;
+    t=p->getData();
+    p->setData(q->getData());
+    q->setData(t);
+}
+
+int main()
+{
+    Base obj1(10);
+
+    Base obj2(20);
+
+    obj1.display();
+    obj2.display();
+
+    swap(&obj1,&obj2);
+
+    obj1.display();
+    obj2.display();
+
+    obj1.swapValues(&obj2);
+    
+    obj1.display();
+    obj2.display();
+
+    return 0;
+}
+
+
+
+4. Create a base class called shape. Use this class to store 2 double type values that
+could be used to compute the area of figures. Derive 2 specific classes called triangle
+and rectangle from the base shape. Add to the base class a member function
+get_data() to initialise base class data members and another member function
+display_area() to compute and display the area of figures. Make display_area() as a
+virtual function and redefine this function in derived classes to suit their requirements.
+Using these 3 classes, design a program that will accept the dimensions of the
+shapes interactively and display area.
+
+
+#include<iostream>
+
+using namespace std;
+
+class Shape
+{
+    double d1,d2;
+
+public:
+
+    void setData(double a,double b)
+    {
+        d1=a;
+        d2=b;
+    }
+
+    double getD1()
+    {
+        return d1;
+    }
+
+    double getD2()
+    {
+        return d2;
+    }
+
+    virtual void area()=0;
+
+};
+
+class Rectangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<getD1()*getD2()<<endl;
+    }
+};
+
+class Triangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<0.5*getD1()*getD2()<<endl;
+    }
+
+};
+
+int main()
+{
+    Rectangle r;
+    r.setData(10,20);
+    r.area();
+
+    Triangle t;
+    t.setData(10,20);
+    t.area();
+
+    Shape *s;		// OBJECT OF ABSTRACT CLASS (WHO HAS A PURE VIRTUAL FUNCTION AS A MEMBER) CANNOT BE MADE BUT REFERNCE OR POINTER VARIABLE CAN BE MADE
+    Rectangle r1;		// POINTER IS ASSIGNED OBJECT OF DERIVED CLASS AND FUNCTION BINDS TO OBJECT TYPE (RUN-TIME POLYMORPHISM)
+    s=&r1;
+    s->setData(10,20);
+    s->area();
+
+    Triangle t1;
+    s=&t1;
+    s->setData(10,20);
+    s->area();
+
+    return 0;
+}
+
+
+5. Create a base class called Photon. Use this class to store double type value of
+wavelength that could be used to calculate photon energy. Create class
+calculate_photonEnergy which will photon energy.
+Using these classes, calculate photon energy.
+
+
+#include<iostream>
+
+using namespace std;
+
+class Photon
+{
+    double wavelength;
+
+public:
+
+    Photon()
+    {
+        wavelength=0;
+    }
+
+    Photon(double w)
+    {
+        wavelength=w;
+    }
+
+    Photon(int w)
+    {
+        wavelength=w;
+    }
+
+    void setWavelength(int w)
+    {
+        wavelength=w;
+    }
+
+    void setWavelength(double w)
+    {
+        wavelength=w;
+    }
+
+    double getWavelength()
+    {
+        return wavelength;
+    }
+
+    virtual void calcPhotonEnergy()=0;
+};
+
+class _photonEnergy : public Photon
+{
+    double E;
+public:
+
+    _photonEnergy() : Photon()
+    {
+        E=0;
+    }
+
+    _photonEnergy(double w) : Photon(w)
+    {
+        E=6.634e-34*3e8/getWavelength();
+    }
+
+    _photonEnergy(int w) : Photon(w)
+    {
+        E=6.634e-34*3e8/getWavelength();
+    }
+
+    void calcPhotonEnergy()
+    {
+        E=6.634e-34*3e8/getWavelength();
+        cout<<"Wavelength= "<<getWavelength()<<" m "<<endl<<"Photon Energy is= "<<E<<" J "<<endl;
+    }
+};
+
+int main()
+{
+    _photonEnergy e;
+    e.setWavelength(650e-9);
+    e.calcPhotonEnergy();
+
+    return 0;
+}
+
+
+6. Extend above to display the area of circles. For a circle,only one value is needed i.e.
+radius but in get_data() function 2 values are passed.
+
+#include<iostream>
+
+using namespace std;
+
+class Shape
+{
+    double d1,d2;
+
+public:
+
+    void setData(double a,double b=0)
+    {
+        d1=a;
+        d2=b;
+    }
+
+    double getD1()
+    {
+        return d1;
+    }
+
+    double getD2()
+    {
+        return d2;
+    }
+
+    virtual void area()=0;
+
+};
+
+class Rectangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<getD1()*getD2()<<endl;
+    }
+};
+
+class Triangle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<0.5*getD1()*getD2()<<endl;
+    }
+
+};
+
+class Circle : public Shape
+{
+public:
+
+    void area()
+    {
+        cout<<"Area= "<<3.14*getD1()*getD1()<<endl;
+    }
+
+};
+
+int main()
+{
+    Rectangle r;
+    r.setData(10,20);
+    r.area();
+
+    Triangle t;
+    t.setData(10,20);
+    t.area();
+
+    Circle c;
+    c.setData(10);
+    c.area();
+
+    Shape *s;
+    Rectangle r1;
+    s=&r1;
+    s->setData(10,20);
+    s->area();
+
+    Triangle t1;
+    s=&t1;
+    s->setData(10,20);
+    s->area();
+
+    Circle c1;
+    s=&c1;
+    s->setData(10);
+    s->area();
+
+    return 0;
+}
+
+
+7. Create a base class called Matrix. Use this class to store 4 int type values that could
+be used to calculate determinants and create matrices. Create class
+calculate_determinant which will calculate the determinant of a matrix.
+Using these classes, calculate the determinant of the matrix.
+
+#include<iostream>
+
+using namespace std;
+
+class Matrix
+{
+    int m[4];
+
+public:
+
+    Matrix()
+    {
+        for(int i=0;i<4;i++)
+        {
+            m[i]=0;
+        }
+    }
+
+    Matrix(int *p)
+    {
+        for(int i=0;i<4;i++)
+        {
+            m[i]=p[i];
+        }
+    }
+
+    void setValues(int *p)
+    {
+        for(int i=0;i<4;i++)
+        {
+            m[i]=p[i];
+        }
+    }
+
+    int* getValues()
+    {
+        return m;
+    }
+
+    void showMatrix()
+    {
+        for(int i=0;i<4;i++)
+        {
+            cout<<"value "<<i+1<<" = "<<m[i]<<endl;
+        }
+    }
+
+    virtual void calcDeterminant()=0;
+};
+
+class Determinant : public Matrix
+{
+    int det;
+
+public:
+
+    Determinant() : Matrix()
+    {
+        det=0;
+    }
+
+    Determinant(int *p) : Matrix(p)
+    {
+        int *a = getValues();
+        det=(a[0]*a[3])-(a[1]*a[2]);
+    }
+
+    void calcDeterminant()
+    {
+        int *a = getValues();
+        det=(a[0]*a[3])-(a[1]*a[2]);
+        showMatrix();
+        cout<<"Determinant= "<<det<<endl;
+    }
+
+};
+
+int main()
+{
+    int arr[4];
+    for(int i=0;i<4;i++)
+    {
+        cout<<"Enter value "<<i+1<<" : ";
+        cin>>arr[i];
+    }
+    Determinant d(arr);
+    d.calcDeterminant();
+
+    return 0;
+}
+
+
+
+8. Create a base class called proof. Use this class to store two int type values that could
+be used to prove that triangle is a right angled triangle. Create a class compute
+which will determine whether a triangle is a right angled triangle.
+Using these classes, design a program that will accept dimensions of a triangle, and
+display the result.
+(Summary: Prove that triangle is a right angled triangle using pythagoras theorem).
+
+
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+
+class Proof
+{
+    int b,p;
+
+public:
+
+    Proof()
+    {
+        b=0;
+        p=0;
+    }
+
+    Proof(int x,int y)
+    {
+        b=x;
+        p=y;
+    }
+
+    void setValues(int x,int y)
+    {
+        b=x;
+        p=y;
+    }
+
+    void setBase(int x)
+    {
+        b=x;
+    }
+
+    void setPerpendicular(int y)
+    {
+        p=y;
+    }
+
+    int getBase()
+    {
+        return b;
+    }
+
+    int getPerpendicular()
+    {
+        return p;
+    }
+
+    virtual void proveRightAngledTriangle()=0;
+};
+
+class Compute : public Proof
+{
+    int h;
+
+public:
+
+    Compute() : Proof()
+    {
+        h=0;
+    }
+
+    Compute(int x,int y,int z) : Proof(x,y)
+    {
+        h=z;
+    }
+
+    void setValues(int x,int y,int z)
+    {
+        setBase(x);
+        setPerpendicular(y);
+        h=z;
+    }
+
+    void proveRightAngledTriangle()
+    {
+        int sum=pow(getBase(),2)+pow(getPerpendicular(),2);
+        if(pow(h,2)==sum)
+            cout<<"Triangle is Right Angled Triangle"<<endl;
+        else
+            cout<<"Triangle is Not a Right Angled Triangle"<<endl;
+    }
+};
+
+int main()
+{
+    Compute t;
+    t.setValues(3,4,5);
+    t.proveRightAngledTriangle();
+
+    return 0;
+}
+
+
+9. Create a base class called volume. Use this class to store two double type values
+that could be used to compute the volume of figures. Derive two specific classes
+called cube and sphere from the base shape. Add to the base class, a member
+function get_data() to initialise base class data members and another member
+function display_volume() to compute and display the volume of figures. Make
+display_volume() as a virtual function and redefine this function in the derived
+classes to suit their requirements.
+Using these three classes, design a program that will accept dimensions of a cube
+or a sphere interactively, and display the volume.
+
+
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+class Volume
+{
+    double s;
+    double v;
+
+public:
+
+    Volume()
+    {
+        s=0;
+    }
+
+    Volume(double a)
+    {
+        s=a;
+    }
+
+    void set_data(double a)
+    {
+        s=a;
+    }
+
+    Volume(int a)
+    {
+        s=a;
+    }
+
+    void set_data(int a)
+    {
+        s=a;
+    }
+
+    void setVolume(double a)
+    {
+        v=a;
+    }
+
+    void setVolume(int a)
+    {
+        v=a;
+    }
+
+    double getVolume()
+    {
+        return v;
+    }
+
+    virtual void display_volume()=0;
+};
+
+class Cube : public Volume
+{
+public:
+
+    Cube() : Volume()
+    {
+        setVolume(0);
+    }
+
+    Cube(double a) : Volume(a)
+    {
+        double volume=pow(a,3);
+        setVolume(volume);
+    }
+
+    Cube(int a) : Volume(a)
+    {
+        int volume=pow(a,3);
+        setVolume(volume);
+    }
+
+    void display_volume()
+    {
+        cout<<"Volume is= "<<getVolume()<<endl;
+    }
+
+};
+
+class Sphere : public Volume
+{
+public:
+
+    Sphere() : Volume()
+    {
+        setVolume(0);
+    }
+
+    Sphere(double a) : Volume(a)
+    {
+        double volume=4.188*pow(a,3);
+        setVolume(volume);
+    }
+
+    Sphere(int a) : Volume(a)
+    {
+        double volume=4.188*pow(a,3);
+        setVolume(volume);
+    }
+
+    void display_volume()
+    {
+        cout<<"Volume is= "<<getVolume()<<endl;
+    }
+
+};
+
+int main()
+{
+    Cube c(10);
+    c.display_volume();
+
+    Sphere s(10);
+    s.display_volume();
+
+    return 0;
+}
+
+
+10. Create a base class called shape. Use this class to store two double type values that
+could be used to compute the area of figures. Derive two specific classes called
+square and parallelogram from the base shape. Add to the base class, a member
+function get_data() to initialise base class data members and another member
+function display_area() to compute and display the area of figures. Make
+display_area() as a virtual function and redefine this function in the derived classes to
+suit their requirements.
+Using these three classes, design a program that will accept dimensions of a
+square or a parallelogram interactively, and display the area.
+
+
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+class Shape
+{
+    double s1;
+    double s2;
+
+public:
+
+    Shape()
+    {
+        s1=0;
+        s2=0;
+    }
+
+    Shape(double a,double b=1)
+    {
+        s1=a;
+        s2=b;
+    }
+
+    void set_data(double a,double b=1)
+    {
+        s1=a;
+        s2=b;
+    }
+
+    Shape(int a,int b=1)
+    {
+        s1=a;
+        s2=b;
+    }
+
+    void set_data(int a,int b=1)
+    {
+        s1=a;
+        s2=b;
+    }
+
+    double getSide1()
+    {
+        return s1;
+    }
+
+    double getSide2()
+    {
+        return s2;
+    }
+
+    virtual void display_area()=0;
+};
+
+class Square : public Shape
+{
+    double ar;
+public:
+
+    Square() : Shape()
+    {
+        ar=0;
+    }
+
+    Square(double a) : Shape(a)
+    {
+        ar=pow(getSide1(),2);
+    }
+
+    Square(int a) : Shape(a)
+    {
+        ar=pow(getSide1(),2);
+    }
+
+    void display_area()
+    {
+        cout<<"Area is= "<<ar<<endl;
+    }
+
+};
+
+class Parallelogram : public Shape
+{
+    int ar;
+public:
+
+    Parallelogram() : Shape()
+    {
+        ar=0;
+    }
+
+    Parallelogram(double a,double b) : Shape(a,b)
+    {
+        ar=getSide1()*getSide2();
+    }
+
+    Parallelogram(int a,int b) : Shape(a,b)
+    {
+        ar=getSide1()*getSide2();
+    }
+
+    void display_area()
+    {
+        cout<<"Area is= "<<ar<<endl;
+    }
+
+};
+
+int main()
+{
+    Square s(10);
+    s.display_area();
+
+    Parallelogram p(10,20);
+    p.display_area();
+
+    return 0;
+}
+
+
+
+
+
